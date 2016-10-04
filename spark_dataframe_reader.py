@@ -41,6 +41,24 @@ def set_type(row,list_of_types):
        new_row.append(i)
    return new_row
 
+## Creating a field object for spark:
+def create_structField(headers):
+   #from pyspark.sql.types import *
+   from pyspark.sql.types import StructField, StringType, FloatType, IntegerType, DateType, FloatType, LongType
+   fields = []
+   for k, t in headers:
+       if t == 'string':
+           fields.append(StructField(k, StringType(), True))
+       elif t == 'float':
+           fields.append(StructField(k, FloatType(), True))
+       elif t == 'integer':
+           fields.append(StructField(k, IntegerType(), True))
+       elif t == 'long':
+           fields.append(StructField(k, LongType(), True))
+       elif t == 'date':
+           fields.append(StructField(k, DateType(), True))
+   return fields
+
 # Reading textfile:
 lines = sc.textFile('path to data')
 # Parsing rows and setting the appropriate type for each object:
